@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2021.11.24
+## Dockerfile of iot-house_docker ; Ver:2021.11.28
 ## Cache confirmation　-->　docker system df
 ## Build Cache clean --> docker builder prune
 ## Build --> docker build ./ -t iot-house_docker:v0.01
@@ -65,6 +65,7 @@ COPY app-src/bin/msleep /usr/local/bin/
 COPY app-src/bin/pepochecksum /usr/local/bin/
 COPY app-src/bin/pepocp2112ctl /usr/local/bin/
 COPY app-src/bin/pepodiodexec /usr/local/bin/
+COPY app-src/bin/epicon /usr/local/bin/
 RUN mkdir /etc/rc.pepo
 COPY app-src/index.html /var/www/html
 COPY app-src/etc_rc.pepo_password /etc/rc.pepo/password
