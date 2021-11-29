@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2021.11.28
+## Dockerfile of iot-house_docker ; Ver:2021.11.29
 ## Cache confirmation　-->　docker system df
 ## Build Cache clean --> docker builder prune
 ## Build --> docker build ./ -t iot-house_docker:v0.01
@@ -13,6 +13,7 @@
 ## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:v0.01 /etc/rc.local
 
 FROM amd64/ubuntu:20.04
+#FROM i386/ubuntu:18.04
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Asia/Tokyo
 ARG APP_UID=1000
@@ -23,6 +24,7 @@ RUN useradd -s /bin/bash -m --uid ${APP_UID} --groups sudo ${APP_USER} \
 # Copy Dockerfile
 COPY Dockerfile /Dockerfile
 RUN apt-get update && apt-get install -y \
+tzdata \
 rsyslog \
 sudo \
 iputils-ping \
@@ -47,7 +49,7 @@ rrdtool
 RUN mkdir /www
 RUN mkdir /service
 RUN mkdir /usr/src/pepolinux
-COPY app-src/rc.local /etc
+COPY app-src/rc.local_docker /etc
 COPY app-src/pepolinux.tar.gz /usr/src/pepolinux/
 COPY app-src/lubuntu_cmd.tar.gz /usr/src/pepolinux/
 ADD app-src/lubuntu_cmd.tar.gz /usr/local/bin/
@@ -60,7 +62,7 @@ ADD app-src/service.tar.gz /service/
 ADD app-src/apache_conf.tar.gz /etc/apache2/
 ADD app-src/exim4_conf.tar.gz /etc/exim4/
 COPY app-src/svscan /etc/init.d/
-# copy local bin
+# copy /usr/local/bin, amd64 or i386
 COPY app-src/bin/msleep /usr/local/bin/
 COPY app-src/bin/pepochecksum /usr/local/bin/
 COPY app-src/bin/pepocp2112ctl /usr/local/bin/
@@ -70,4 +72,5 @@ RUN mkdir /etc/rc.pepo
 COPY app-src/index.html /var/www/html
 COPY app-src/etc_rc.pepo_password /etc/rc.pepo/password
 EXPOSE 22 80 443
-ENTRYPOINT ["/etc/rc.local"]
+#ENTRYPOINT ["/etc/rc.local_docker"]
+CMD ["/etc/rc.local_docker"]
