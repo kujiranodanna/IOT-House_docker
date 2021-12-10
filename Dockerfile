@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2021.11.29
+## Dockerfile of iot-house_docker ; Ver:2021.12.5
 ## Cache confirmation　-->　docker system df
 ## Build Cache clean --> docker builder prune
 ## Build --> docker build ./ -t iot-house_docker:v0.01
@@ -71,6 +71,8 @@ COPY app-src/bin/epicon /usr/local/bin/
 RUN mkdir /etc/rc.pepo
 COPY app-src/index.html /var/www/html
 COPY app-src/etc_rc.pepo_password /etc/rc.pepo/password
+RUN mkdir /root/.mutt
+COPY app-src/mutt /root/.mutt
 EXPOSE 22 80 443
 #ENTRYPOINT ["/etc/rc.local_docker"]
 CMD ["/etc/rc.local_docker"]
