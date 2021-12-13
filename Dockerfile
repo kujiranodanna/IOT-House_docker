@@ -1,16 +1,16 @@
-## Dockerfile of iot-house_docker ; Ver:2021.12.5
-## Cache confirmation　-->　docker system df
-## Build Cache clean --> docker builder prune
-## Build --> docker build ./ -t iot-house_docker:v0.01
-## docker container ps -a
+## Dockerfile of iot-house_docker ; Ver:2021.12.11
+## docker system df  <-- Cache confirmation
+## docker builder prune  <-- Build Cache clean
+## docker build ./ -t iot-house_docker:v0.01  <-- Build
+## docker container ps -a  <-- List container
 ## CONTAINER ID xxxxxxxxxxxx NAMES --> iot-house_docker bash
-## docker container_ID exec -it iot-house_docker bash
-## docker commit iot-house_docker iot-house_docker:new_version
+## docker container_ID exec -it iot-house_docker bash  <-- Container into bash
+## docker commit iot-house_docker iot-house_docker:new_version  <-- copy Container to image
 ## docker stop house_docker  <-- container stop
 ## docker rm house_docker  <-- container delete
 ## docker tag iot-house_docker:v0.00 iot-house_docker:v0.01 <-- image tag change
 ## docker rmi house_docker:v0.01 <-- image delete(REPOSITORY:TAG)
-## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:v0.01 /etc/rc.local
+## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local
 
 FROM amd64/ubuntu:20.04
 #FROM i386/ubuntu:18.04
@@ -72,7 +72,7 @@ RUN mkdir /etc/rc.pepo
 COPY app-src/index.html /var/www/html
 COPY app-src/etc_rc.pepo_password /etc/rc.pepo/password
 RUN mkdir /root/.mutt
-COPY app-src/mutt /root/.mutt
+COPY app-src/muttrc /root/.mutt
 EXPOSE 22 80 443
 #ENTRYPOINT ["/etc/rc.local_docker"]
 CMD ["/etc/rc.local_docker"]
