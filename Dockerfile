@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2021.12.11
+## Dockerfile of iot-house_docker ; Ver:2022.2.11
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
@@ -42,7 +42,7 @@ libhidapi-hidraw0 \
 lrzsz \
 procmail \
 nkf \
-mpg321 \
+mplayer \
 mutt \
 openssh-server \
 rrdtool
