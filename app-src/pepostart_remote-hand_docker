@@ -1,0 +1,63 @@
+#!/bin/bash
+# The MIT License
+# Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2021.11.23
+# pepostart_remote-hand ; start remote-hand for docker
+hdparm -S 1 /dev/sda
+TMP=/tmp
+WWWDIR=/www
+SVCDIR=$WWWDIR/pepolinux
+WORKDIR=/www/remote-hand
+WORKDIR_TMP=/www/remote-hand/tmp
+if [ ! -e /$WORKDIR_TMP ];then
+  (cd $WWWDIR ; rm -rf $WWWDIR/* ; mkdir -p $WORKDIR $WORKDIR_TMP ; cd $WORKDIR ; tar xfz /usr/src/pepolinux/remote_dio.tar.gz ; chown www-data.www-data $WORKDIR_TMP)
+  cd $TMP; rm -rf $TMP/* ; mkdir -p run/lock spool log
+  cd / ; rm -rf run ; ln -s $TMP/run run ; cd run ; ln -s $TMP/run/lock lock
+  cd /var ; rm -rf log spool ; ln -s $TMP/spool spool ; ln -s $TMP/log log
+  if [ -e /usr/src/pepolinux/log.tar.gz ];then
+    (cd /var/log ; tar xfz /usr/src/pepolinux/log.tar.gz)
+  fi
+  if [ -e /usr/src/pepolinux/spool.tar.gz ];then
+    (cd /var/spool ; tar xfz /usr/src/pepolinux/spool.tar.gz)
+  fi
+  (cd /usr/bin/ ; rm -f dio*)
+  mkdir -p $SVCDIR ; cd $SVCDIR ; tar xfz /usr/src/pepolinux/pepolinux.tar.gz ; chown root.root $SVCDIR
+  /etc/init.d/svscan start
+  (cd /etc/exim4 ; cp -f passwd.client.org passwd.client)
+  if [ -e /usr/src/pepolinux/back_up.tar.gz ];then
+    (cd $WORKDIR ; tar xfz /usr/src/pepolinux/back_up.tar.gz)
+    (cd $WORKDIR_TMP ; rm -f .pepodioctl.* .pepotocsctl.* LCK* .*.rrd .*start_time *.png temperature *.mp4 *.jpg)
+  else
+    (cd $WORKDIR ; rm -f dio_sh.tar.gz)
+  fi
+  sync
+  if [ -e ${WORKDIR}/dio_sh.tar.gz ];then
+    (cd /usr/bin ; tar xfz ${WORKDIR}/dio_sh.tar.gz)
+  fi
+  if [ -e /usr/src/pepolinux/startup.s ];then
+    /usr/src/pepolinux/startup.s
+  else
+    [ -e /usr/src/pepolinux/back_up.tar.gz ] && rm -f /usr/src/pepolinux/back_up.tar.gz
+  fi
+  if [ -e ${WORKDIR_TMP}/.ping_watch.cron ];then
+    crontab -u www-data ${WORKDIR_TMP}/.ping_watch.cron
+  fi
+  if [ -e ${WORKDIR_TMP}/.pepogmail4dio.conf ];then
+    . ${WORKDIR_TMP}/.pepogmail4dio.conf
+    cat >/etc/exim4/passwd.client<<END
+gmail-smtp.l.google.com:${GMAILUSER}@gmail.com:${GMAILPASSWORD}
+*.google.com:${GMAILUSER}@gmail.com:${GMAILPASSWORD}
+smtp.gmail.com:${GMAILUSER}@gmail.com:${GMAILPASSWORD}
+END
+  fi
+else
+  echo remote-hand aredy running!
+fi
+#/usr/local/bin/pepousbttyck
+/etc/init.d/svscan start
+/etc/init.d/rsyslog start
+/etc/init.d/apache2 start
+/etc/init.d/exim4 start
+/etc/init.d/ssh start
+/etc/init.d/cron start
+echo -en >/home/remote/.bash_history
+echo -en >/root/.bash_history
