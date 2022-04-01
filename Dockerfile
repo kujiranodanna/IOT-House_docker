@@ -1,16 +1,20 @@
-## Dockerfile of iot-house_docker ; Ver:2022.2.11
+## Dockerfile of iot-house_docker ; Ver:2022.3.31
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
 ## docker container ps -a  <-- List container
 ## CONTAINER ID xxxxxxxxxxxx NAMES --> iot-house_docker bash
 ## docker container_ID exec -it iot-house_docker bash  <-- Container into bash
+## docker exec -it iot-house_docker bash  <-- Container NAMES into bash
 ## docker commit iot-house_docker iot-house_docker:new_version  <-- copy Container to image
 ## docker stop house_docker  <-- container stop
 ## docker rm house_docker  <-- container delete
 ## docker tag iot-house_docker:v0.00 iot-house_docker:v0.01 <-- image tag change
 ## docker rmi house_docker:v0.01 <-- image delete(REPOSITORY:TAG)
-## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local
+## Attach CP2112 and TWELITE DIP to USB and run
+## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local_docker
+## Run without attaching anything to USB
+## docker run -itd --privileged --name iot-house_docker -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local_docker
 
 FROM amd64/ubuntu:20.04
 #FROM i386/ubuntu:18.04
@@ -49,7 +53,6 @@ rrdtool
 RUN mkdir /www
 RUN mkdir /service
 RUN mkdir /usr/src/pepolinux
-COPY app-src/rc.local_docker /etc
 COPY app-src/pepolinux.tar.gz /usr/src/pepolinux/
 COPY app-src/lubuntu_cmd.tar.gz /usr/src/pepolinux/
 ADD app-src/lubuntu_cmd.tar.gz /usr/local/bin/
@@ -68,6 +71,8 @@ COPY app-src/bin/pepochecksum /usr/local/bin/
 COPY app-src/bin/pepocp2112ctl /usr/local/bin/
 COPY app-src/bin/pepodiodexec /usr/local/bin/
 COPY app-src/bin/epicon /usr/local/bin/
+COPY app-src/pepostart_remote-hand_docker /usr/local/bin/
+COPY app-src/rc.local_docker /etc
 RUN mkdir /etc/rc.pepo
 COPY app-src/index.html /var/www/html
 COPY app-src/etc_rc.pepo_password /etc/rc.pepo/password
