@@ -1,20 +1,20 @@
-## Dockerfile of iot-house_docker ; Ver:2022.3.31
+## Dockerfile of iot-house_docker ; Ver:2022.8.7
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
 ## docker container ps -a  <-- List container
 ## CONTAINER ID xxxxxxxxxxxx NAMES --> iot-house_docker bash
-## docker container_ID exec -it iot-house_docker bash  <-- Container into bash
-## docker exec -it iot-house_docker bash  <-- Container NAMES into bash
+## docker exec -it iot-house_docker bash  <-- Container into bash
 ## docker commit iot-house_docker iot-house_docker:new_version  <-- copy Container to image
 ## docker stop house_docker  <-- container stop
+## docker start house_docker  <-- container start ...
+## docker restart house_docker  <-- container restart
 ## docker rm house_docker  <-- container delete
 ## docker tag iot-house_docker:v0.00 iot-house_docker:v0.01 <-- image tag change
-## docker rmi house_docker:v0.01 <-- image delete(REPOSITORY:TAG)
-## Attach CP2112 and TWELITE DIP to USB and run
-## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local_docker
-## Run without attaching anything to USB
-## docker run -itd --privileged --name iot-house_docker -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local_docker
+## docker rmi iot-house_docker:v0.01 <-- image delete(REPOSITORY:TAG)
+## docker run -itd --privileged --name iot-house_docker -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
+## When TWE-Lite-DIP is connected to USB
+## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local
 
 FROM amd64/ubuntu:20.04
 #FROM i386/ubuntu:18.04
@@ -53,6 +53,7 @@ rrdtool
 RUN mkdir /www
 RUN mkdir /service
 RUN mkdir /usr/src/pepolinux
+COPY app-src/rc.local_docker /etc
 COPY app-src/pepolinux.tar.gz /usr/src/pepolinux/
 COPY app-src/lubuntu_cmd.tar.gz /usr/src/pepolinux/
 ADD app-src/lubuntu_cmd.tar.gz /usr/local/bin/
@@ -64,6 +65,7 @@ COPY app-src/service.tar.gz /usr/src/pepolinux/
 ADD app-src/service.tar.gz /service/
 ADD app-src/apache_conf.tar.gz /etc/apache2/
 ADD app-src/exim4_conf.tar.gz /etc/exim4/
+ADD app-src/etc_cron_d.tar.gz /etc/cron.d/
 COPY app-src/svscan /etc/init.d/
 # copy /usr/local/bin, amd64 or i386
 COPY app-src/bin/msleep /usr/local/bin/

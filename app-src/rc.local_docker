@@ -22,5 +22,8 @@ mount -t tmpfs -o size=100M tmpfs /tmp
 # mount -t tmpfs -o size=64M tmpfs /var/log
 # mount -a
 /usr/local/bin/pepostart_remote-hand_docker >/dev/null 2>&1
+sed -e 's/IOT-House_old_pc/IOT-House_docker/' /www/remote-hand/pi_int_cp2112.cgi> /www/remote-hand/tmp_pi_int_cp2112.cgi
+mv /www/remote-hand/tmp_pi_int_cp2112.cgi /www/remote-hand/pi_int_cp2112.cgi
+chmod +x /www/remote-hand/pi_int_cp2112.cgi
 /bin/bash
 exit 0
