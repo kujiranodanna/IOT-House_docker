@@ -1,9 +1,8 @@
-## Dockerfile of iot-house_docker ; Ver:2022.8.7
+## Dockerfile of iot-house_docker ; Ver:2022.8.10
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
 ## docker container ps -a  <-- List container
-## CONTAINER ID xxxxxxxxxxxx NAMES --> iot-house_docker bash
 ## docker exec -it iot-house_docker bash  <-- Container into bash
 ## docker commit iot-house_docker iot-house_docker:new_version  <-- copy Container to image
 ## docker stop house_docker  <-- container stop
@@ -16,8 +15,8 @@
 ## When TWE-Lite-DIP is connected to USB
 ## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 iot-house_docker:v0.01 /etc/rc.local
 
-FROM amd64/ubuntu:20.04
-#FROM i386/ubuntu:18.04
+#FROM amd64/ubuntu:20.04
+FROM i386/ubuntu:18.04
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Asia/Tokyo
 ARG APP_UID=1000
