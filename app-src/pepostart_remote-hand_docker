@@ -1,15 +1,16 @@
 #!/bin/bash
 # The MIT License
-# Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2021.11.23
+# Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2022.9.30
 # pepostart_remote-hand ; start remote-hand for docker
 hdparm -S 1 /dev/sda
 TMP=/tmp
 WWWDIR=/www
 SVCDIR=$WWWDIR/pepolinux
+WWWTMP=$WWWDIR/tmp
 WORKDIR=/www/remote-hand
 WORKDIR_TMP=/www/remote-hand/tmp
 if [ ! -e /$WORKDIR_TMP ];then
-  (cd $WWWDIR ; rm -rf $WWWDIR/* ; mkdir -p $WORKDIR $WORKDIR_TMP ; cd $WORKDIR ; tar xfz /usr/src/pepolinux/remote_dio.tar.gz ; chown www-data.www-data $WORKDIR_TMP)
+  (cd $WWWDIR ; rm -rf $WWWDIR/* ; mkdir -p $WORKDIR $WORKDIR_TMP $WWWTMP; cd $WORKDIR ; tar xfz /usr/src/pepolinux/remote_dio.tar.gz ; chown www-data.www-data $WORKDIR_TMP $WWWTMP)
   cd $TMP; rm -rf $TMP/* ; mkdir -p run/lock spool log
   cd / ; rm -rf run ; ln -s $TMP/run run ; cd run ; ln -s $TMP/run/lock lock
   cd /var ; rm -rf log spool ; ln -s $TMP/spool spool ; ln -s $TMP/log log
@@ -21,7 +22,6 @@ if [ ! -e /$WORKDIR_TMP ];then
   fi
   (cd /usr/bin/ ; rm -f dio*)
   mkdir -p $SVCDIR ; cd $SVCDIR ; tar xfz /usr/src/pepolinux/pepolinux.tar.gz ; chown root.root $SVCDIR
-  /etc/init.d/svscan start
   (cd /etc/exim4 ; cp -f passwd.client.org passwd.client)
   if [ -e /usr/src/pepolinux/back_up.tar.gz ];then
     (cd $WORKDIR ; tar xfz /usr/src/pepolinux/back_up.tar.gz)
@@ -52,7 +52,6 @@ END
 else
   echo remote-hand aredy running!
 fi
-#/usr/local/bin/pepousbttyck
 /etc/init.d/svscan start
 /etc/init.d/rsyslog start
 /etc/init.d/apache2 start
