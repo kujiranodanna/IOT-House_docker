@@ -1,6 +1,6 @@
 #!/bin/bash
 # The MIT License
-# Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2022.9.30
+# Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2023.1.20
 # pepostart_remote-hand ; start remote-hand for docker
 hdparm -S 1 /dev/sda
 TMP=/tmp
@@ -55,7 +55,7 @@ fi
 /etc/init.d/svscan start
 /etc/init.d/rsyslog start
 /etc/init.d/apache2 start
-/etc/init.d/exim4 start
+#/etc/init.d/exim4 start
 /etc/init.d/ssh start
 /etc/init.d/cron start
 echo -en >/home/remote/.bash_history
