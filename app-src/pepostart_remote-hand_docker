@@ -1,7 +1,7 @@
 #!/bin/bash
 # The MIT License
 # Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2023.1.20
-# pepostart_remote-hand ; start remote-hand for docker
+# pepostart_remote-hand_docker ; start remote-hand for docker
 hdparm -S 1 /dev/sda
 TMP=/tmp
 WWWDIR=/www
