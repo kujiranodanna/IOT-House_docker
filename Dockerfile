@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2024.5.19
+## Dockerfile of iot-house_docker ; Ver:2024.7.28
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
@@ -24,7 +24,7 @@
 
 FROM amd64/ubuntu:22.04
 #FROM i386/ubuntu:18.04
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Tokyo
 ARG APP_UID=1000
 ARG APP_USER=remote
