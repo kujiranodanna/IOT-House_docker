@@ -1,6 +1,6 @@
 # IOT-House_docker
 - [IOT-House_docker](https://github.com/kujiranodanna/IOT-House_docker) is a reconstruction of [IOT-House_old_pc](https://github.com/kujiranodanna/IOT-House_old_pc) based on amd64/ubuntu:22.04 or i386/ubuntu18.04. 
-- Requires docker privilege mode to use gpio's [Sunhayato MM-CP2112B][(https://shop.sunhayato.co.jp/products/MM-CP2112B).
+- Requires docker privilege mode to use gpio's CP2112(Silicon Laboratories Single-Chip HID USB to SMBus Master Bridg) [Sunhayato MM-CP2112B][(https://shop.sunhayato.co.jp/products/MM-CP2112B).
 - Execute as follows.<br>
   docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
 - The Docker engine can only run on Linux. Windows and Mac won't work.
