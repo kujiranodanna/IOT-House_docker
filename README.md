@@ -5,6 +5,7 @@
   docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
 - The Docker engine can only run on Linux. Windows and Mac won't work.
 - It also works on Windows Docker Desktop, but it takes some time, but it's still a great challenge to be able to operate USB-connected devices directly from a container.
+  --> As of August 10, 2024, operation has been confirmed on Windows 11.
 
   - Install the latest PowerShell 7.4.4 or later and usbipd-win_x.msi.
 
