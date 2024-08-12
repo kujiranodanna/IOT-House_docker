@@ -16,19 +16,15 @@ PowerShell 7.4.4
 usbipd list    
 Connected:
 BUSID  VID:PID    DEVICE                                                        STATE
-1-1    328f:006d  HD Webcam ... <-- Web camera                              Not shared
 .
 2-1    10c4:ea90  USB input devices <-- cp2112                              Not shared
 .
-usbipd bind --busid 1-1
 usbipd bind --busid 2-1
-usbipd attach --wsl --busid 1-1
 usbipd attach --wsl --busid 2-1
 .
 usbipd list    
 connected:
 BUSID  VID:PID    DEVICE                                                        STATE
-1-1    328f:006d  HD Webcam ... <-- Web camera                                Attached
 .
 2-1    10c4:ea90  USB input devices <-- cp2112                                Attached
 .
