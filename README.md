@@ -1,6 +1,7 @@
 # IOT-House_docker
 - [IOT-House_docker](https://github.com/kujiranodanna/IOT-House_docker) is a reconstruction of [IOT-House_old_pc](https://github.com/kujiranodanna/IOT-House_old_pc) based on amd64/ubuntu:22.04 or i386/ubuntu18.04. 
-- Requires docker privilege mode to use gpio's CP2112(Silicon Laboratories Single-Chip HID USB to SMBus Master Bridg) [Sunhayato MM-CP2112B][(https://shop.sunhayato.co.jp/products/MM-CP2112B).
+- Requires docker privilege mode to use gpio's CP2112(Silicon Laboratories Single-Chip HID USB to SMBus Master Bridg)[Sunhayato MM-CP2112B](https://shop.sunhayato.co.jp/products/MM-CP2112B).
+- Wireless GPIO[mono wireless TWELITE and MONOSTICK](https://mono-wireless.com/jp/products/index.html)
 - Execute as follows.<br>
   docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
 - The Docker engine can only run on Linux. Windows and Mac won't work.
@@ -17,17 +18,23 @@ usbipd list
 Connected:
 BUSID  VID:PID    DEVICE                                                        STATE
 .
-2-1    10c4:ea90  USB input devices <-- cp2112                              Not shared
+2-1    10c4:ea90  USB input devices <-- cp2112                                  Not shared
+2-2    0403:6001  USB Serial Converter <-- TWELITE                              Not shared
 .
 usbipd bind --busid 2-1
+usbipd bind --busid 2-2
 usbipd attach --wsl --busid 2-1
+usbipd attach --wsl --busid 2-2
 .
 usbipd list    
 connected:
 BUSID  VID:PID    DEVICE                                                        STATE
 .
-2-1    10c4:ea90  USB input devices <-- cp2112                                Attached
+2-1    10c4:ea90  USB 入力デバイス                                              Attached
+2-2    0403:6001  USB Serial Converter                                        Attached
 .
+docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
+If you don't have TWELITE, follow the steps below
 docker run -itd --privileged --name iot-house_docker -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:ubuntu22.04-latest
 ```
 - By the way, in the case of Windows, it can be started without a devices.
