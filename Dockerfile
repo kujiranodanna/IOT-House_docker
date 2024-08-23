@@ -1,9 +1,8 @@
-## Dockerfile of iot-house_docker ; Ver:2024.7.28
+## Dockerfile of iot-house_docker ; Ver:2024.8.20
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
 ## docker container ps -a  <-- List container
-## CONTAINER ID xxxxxxxxxxxx NAMES --> iot-house_docker bash
 ## docker exec -it iot-house_docker bash  <-- Container into bash
 ## docker commit iot-house_docker iot-house_docker:new_version  <-- copy Container to image
 ## docker save iot-house_docker:new_version -o iot_docker_carry.tar <-- carry Container image
