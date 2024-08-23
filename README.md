@@ -30,7 +30,7 @@ usbipd list
 connected:
 BUSID  VID:PID    DEVICE                                                        STATE
 .
-2-1    10c4:ea90  USB 入力デバイス                                              Attached
+2-1    10c4:ea90  USB input devices                                           Attached
 2-2    0403:6001  USB Serial Converter                                        Attached
 .
 docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
