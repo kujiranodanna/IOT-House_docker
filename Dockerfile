@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2024.8.20
+## Dockerfile of iot-house_docker ; Ver:2024.10.7
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
@@ -20,6 +20,9 @@
 ## docker run -itd --privileged --name iot-house_docker -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:ubuntu22.04-latest
 ## When TWE-Lite-DIP is connected to USB
 ## docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:ubuntu22.04-latest
+## It also works on Windows Docker Desktop, but it takes some time, but it's still a great challenge to be able to operate USB-connected devices directly from a container. --> As of August 10, 2024, operation has been confirmed on Windows 11.
+## Please refer to the following URL
+## https://github.com/kujiranodanna/IOT-House_docker
 
 FROM amd64/ubuntu:22.04
 #FROM i386/ubuntu:18.04
