@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2024.10.7
+## Dockerfile of iot-house_docker ; Ver:2024.12.28
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
@@ -24,11 +24,13 @@
 ## Please refer to the following URL
 ## https://github.com/kujiranodanna/IOT-House_docker
 
-FROM amd64/ubuntu:22.04
+FROM amd64/ubuntu:24.04
+#FROM amd64/ubuntu:22.04
 #FROM i386/ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Tokyo
-ARG APP_UID=1000
+#ARG APP_UID=1000
+ARG APP_UID=1001
 ARG APP_USER=remote
 ARG APP_PASSWORD=hand
 RUN useradd -s /bin/bash -m --uid ${APP_UID} --groups sudo ${APP_USER} \
