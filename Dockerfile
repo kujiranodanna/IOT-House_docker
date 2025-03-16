@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:2024.12.28
+## Dockerfile of iot-house_docker ; Ver:0.12 2025.3.16
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
@@ -76,7 +76,10 @@ ADD app-src/service.tar.gz /service/
 ADD app-src/apache_conf.tar.gz /etc/apache2/
 ADD app-src/exim4_conf.tar.gz /etc/exim4/
 ADD app-src/etc_cron_d.tar.gz /etc/cron.d/
+ADD app-src/logroate.tar.gz /etc/logrotate.d/
 COPY app-src/svscan /etc/init.d/
+COPY app-src/crontab_docker /etc/
+COPY app-src/logrotate.conf /etc
 # copy /usr/local/bin, amd64 or i386 -->
 COPY app-src/bin/msleep /usr/local/bin/
 COPY app-src/bin/pepochecksum /usr/local/bin/
