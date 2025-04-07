@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:0.12 2025.3.16
+## Dockerfile of iot-house_docker ; Ver:0.13 2025.4.7
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build

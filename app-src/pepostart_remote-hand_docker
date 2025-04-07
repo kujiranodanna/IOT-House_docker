@@ -1,6 +1,6 @@
 #!/bin/bash
 # The MIT License
-# Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2025.3.15
+# Copyright (c) 2021-2028 Isamu.Yamauchi , 2011.11.28 update 2025.3.28
 # pepostart_remote-hand_docker ; start remote-hand for docker
 TMP=/tmp
 WWWDIR=/www
@@ -17,7 +17,7 @@ if [ ! -e /$WORKDIR_TMP ];then
   if [ -e /usr/src/pepolinux/log.tar.gz ];then
     (cd $TMP ; tar xfz /usr/src/pepolinux/log.tar.gz)
   fi
-  cd / ; rm -rf run ; ln -s $TMP/run run ; cd run ; ln -s $TMP/run/lock lock
+  cd / ; chmod 777 $TMP;chmod +t $TMP ; rm -rf run ; ln -s $TMP/run run ; cd run ; ln -s $TMP/run/lock lock
   cd /var ; rm -rf log spool ; ln -s $TMP/spool spool ; ln -s $TMP/log log
   (cd /usr/bin/ ; rm -f dio*)
   mkdir -p $SVCDIR ; cd $SVCDIR ; tar xfz /usr/src/pepolinux/pepolinux.tar.gz ; chown root.root $SVCDIR
@@ -52,6 +52,7 @@ END
 else
   echo remote-hand aredy running!
 fi
+cp /www/remote-hand/favicon.ico /var/www/html/
 update-exim4.conf
 /etc/init.d/svscan start
 /etc/init.d/rsyslog start
