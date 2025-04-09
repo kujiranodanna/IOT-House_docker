@@ -1,5 +1,11 @@
 # IOT-House_docker
+<<<<<<< HEAD
 - [IOT-House_docker](https://github.com/kujiranodanna/IOT-House_docker) is a reconstruction of [IOT-House_old_pc](https://github.com/kujiranodanna/IOT-House_old_pc) based on amd64/ubuntu:24.04 amd64/ubuntu:22.04 or i386/ubuntu18.04. Ver:0.13 2025.4.9
+=======
+
+- [IOT-House_docker](https://github.com/kujiranodanna/IOT-House_docker) is a reconstruction of [IOT-House_old_pc](https://github.com/kujiranodanna/IOT-House_old_pc) based on amd64/ubuntu:24.04 amd64/ubuntu:22.04 or i386/ubuntu18.04. Ver:0.13 2025.4.7
+
+>>>>>>> 4ea1a97b29ab1dae87306bddedc8f11bb68a46af
 - Requires docker privilege mode to use gpio's CP2112(Silicon Laboratories Single-Chip HID USB to SMBus Master Bridg)[Sunhayato MM-CP2112](https://amzn.to/3MhbeOd).
 - Wireless GPIO[mono wireless TWELITE and MONOSTICK](https://amzn.to/3YYzDj4)
 - Execute as follows.<br>
