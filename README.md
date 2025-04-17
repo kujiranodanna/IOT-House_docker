@@ -13,6 +13,7 @@
 
   - Then you need to bind and attach the USB device.
 ```
+Run wsl2 first
 into PowerShell
 PowerShell 7.4.4
 usbipd list    
