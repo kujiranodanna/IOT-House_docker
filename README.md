@@ -45,6 +45,7 @@ This allows you to remotely control the Raspberry Pis at IOT House, and is also 
 - Before building the image, copy the contents of amd64_bin/* or i386_bin/* to the app-src/bin/ directory according to your environment.
 - Related articles Related articles<br>
 How about using Docker Desktop for Windows for your summer vacation research project?<br>
+  https://www.youtube.com/watch?v=_vSx-duxvw8<br>
   https://www.youtube.com/shorts/8S-WZ3UvIUA<br>
   https://iot-house.jpn.org/wp/2024/08/10/%e5%a4%8f%e4%bc%91%e3%81%bf%e3%81%ae%e8%87%aa%e7%94%b1%e7%a0%94%e7%a9%b6%e3%81%abdocker%e3%81%af%e3%81%84%e3%81%8b%e3%81%8c%e3%80%80%e3%81%9d%e3%81%ae%ef%bc%91/
 - https://hub.docker.com/r/kujiranodanna/iot-house_docker<img width="986" alt="sshot_iot-house_docker" src="https://user-images.githubusercontent.com/70492305/143548255-1ff3dd03-4130-466d-8f81-b4f95b112208.png">
