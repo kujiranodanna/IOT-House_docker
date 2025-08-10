@@ -1,6 +1,6 @@
 /*
 The MIT License
-Copyright (c) 2020-2027 Isamu.Yamauchi , 2019.5.13 Update 2022.2.10
+Copyright (c) 2020-2027 Isamu.Yamauchi , 2019.5.13 Update 2025.7.27
 */
 
 /*
@@ -15,12 +15,16 @@ Copyright (c) 2020-2027 Isamu.Yamauchi , 2019.5.13 Update 2022.2.10
  * BME680 Drivers from https://github.com/BoschSensortec/BME680_driver
  * Downloads bme680.c bme680.h bme680_defs.h
  * Build with
- *   gcc -Wall -g -o pepocp2112ctl pepocp2112ctl.c bme680.c `pkg-config hidapi-hidraw --libs`
- *   or
+ *   apt install libhidapi-dev
  *   gcc -Wall -o pepocp2112ctl pepocp2112ctl.c bme680.c -lhidapi-hidraw
+ *   or
+ *   gcc -Wall -g -o pepocp2112ctl pepocp2112ctl.c bme680.c `pkg-config hidapi-hidraw --libs`
  *
- o 2022.2.10 Ver0.5
-   bug fix mysem_lock,mysem_unlock
+ o 2025.7.27 Ver0.6
+   
+
+ o 2022.2.16 Ver0.5
+   bug fix mysem_lock,mysem_unlock,am2320_measured
  o 2021.4.23 Ver0.4
    bug fix gpio output pin is reset when the command is executed
  o 2021.4.11 Ver0.3
@@ -90,6 +94,7 @@ Copyright (c) 2020-2027 Isamu.Yamauchi , 2019.5.13 Update 2022.2.10
 #define DESTZONE    "TZ=Asia/Tokyo"  /* destination time zone */
 #define SENSOR_DATA "/www/remote-hand/tmp/.pepocp2112bme680"  /* read sensor dta file */
 #define SENSOR_DATA_TMP "/www/remote-hand/tmp/.pepocp2112bme680_tmp"  /* read sensor file data temporary */
+#define SENSOR_DATA_TEMP_SIG "/www/remote-hand/tmp/.pepocp2112bme680_tmp_sig"  /* ambient temperature file */
 
 #include "bme680.h"
 /* BME680 I2C addresses defined bme680_def.h But can be changed here */
@@ -644,7 +649,7 @@ https://www.silabs.com/community/interface/knowledge-base.entry.html/2014/10/21/
     {
       fprintf(stderr, "hid_write() failed: %ls\n" ,
       hid_error(hd));
-     return -1;
+      return -1;
     }
     user_delay_ms (HID_WAIT);
     buf_out[0] = CP2112_DATA_READ_FORCE_SEND;
@@ -677,6 +682,7 @@ https://www.silabs.com/community/interface/knowledge-base.entry.html/2014/10/21/
     }
     if (buf_in[0] == CP2112_DATA_READ_RESPONS && buf_in[1] == 0x02)
       break;
+    retry_cnt++;
   }
 /* Dummy reading */
   ret = cp2112_is_idle(hd);
@@ -965,6 +971,53 @@ int8_t user_i2c_write(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint1
    return 0;
 }
 
+void conf_bme680_sigusr1()
+{
+  uint8_t set_required_settings;
+  gas_sensor.dev_id = BME680_I2C_ADDR_PRIMARY<<1;
+  gas_sensor.intf = BME680_I2C_INTF;
+  gas_sensor.read = user_i2c_read;
+  gas_sensor.write = user_i2c_write;
+  gas_sensor.delay_ms = user_delay_ms;
+  int8_t amb_temp_signal = data.temperature / 100;
+  FILE *fd_signal;
+  fd_signal = fopen(SENSOR_DATA_TEMP_SIG,"w");
+  if(fd_signal < 0){
+    exit(-1);
+  }
+  fprintf(fd_signal,"%d",amb_temp_signal);
+  fclose(fd_signal); 
+  /* amb_temp, BME680 The ambient temperature can be set to before reconfiguring the gas sensor.
+   */
+  gas_sensor.amb_temp = amb_temp_signal;
+  bme680_init(&gas_sensor);
+/* Set the temperature, pressure and humidity settings */
+  gas_sensor.tph_sett.os_hum = BME680_OS_2X;
+  gas_sensor.tph_sett.os_pres = BME680_OS_4X;
+  gas_sensor.tph_sett.os_temp = BME680_OS_8X;
+  gas_sensor.tph_sett.filter = BME680_FILTER_SIZE_3;
+/* Set the remaining gas sensor settings and link the heating profile */
+  gas_sensor.gas_sett.run_gas = BME680_ENABLE_GAS_MEAS;
+/* Create a ramp heat waveform in 3 steps */
+  gas_sensor.gas_sett.heatr_temp = 320; /* degree Celsius */
+  gas_sensor.gas_sett.heatr_dur = 150; /* milliseconds */
+/* Select the power mode */
+/* Must be set before writing the sensor configuration */
+  gas_sensor.power_mode = BME680_FORCED_MODE;
+/* Set the required sensor settings needed */
+  set_required_settings = BME680_OST_SEL | BME680_OSP_SEL | BME680_OSH_SEL | BME680_FILTER_SEL
+    | BME680_GAS_SENSOR_SEL;
+/* Set the desired sensor configuration */
+  bme680_set_sensor_settings(set_required_settings,&gas_sensor);
+/* Set the power mode */
+  bme680_set_sensor_mode(&gas_sensor);
+/* Get the total measurement duration so as to sleep or wait till the
+   measurement is complete */
+  bme680_get_profile_dur(&meas_period, &gas_sensor);
+/* Delay till the measurement is ready */
+  user_delay_ms(meas_period + DELAY);
+}
+
 int conf_bme680(hid_device *hd)
 {
   int8_t rslt = 0; /* Return 0 for Success, non-zero for failure */
@@ -974,6 +1027,10 @@ int conf_bme680(hid_device *hd)
   gas_sensor.read = user_i2c_read;
   gas_sensor.write = user_i2c_write;
   gas_sensor.delay_ms = user_delay_ms;
+  /* amb_temp can be set to 25 prior to configuring the gas sensor 
+   * or by performing a few temperature readings without operating the gas sensor.
+  */
+  gas_sensor.amb_temp = 25;
   rslt = BME680_OK;
   rslt = bme680_init(&gas_sensor);
 /* Set the temperature, pressure and humidity settings */
@@ -1061,6 +1118,7 @@ int main(int argc, char *argv[])
   signal(SIGINT,close_fd);
   signal(SIGHUP,close_fd);
   signal(SIGFPE,SIG_IGN);
+  signal(SIGUSR1,conf_bme680_sigusr1);
   int port = 0;
   int data = 0;
   int invert_data = 0;
