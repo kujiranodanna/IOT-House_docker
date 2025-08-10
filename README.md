@@ -4,5 +4,7 @@
 - Execute as follows.<br>
   docker run -itd --privileged --name iot-house_docker --device=/dev/ttyUSB0:/dev/ttyUSBTWE-Lite -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
 - The Docker engine can only run on Linux. Mac won't work.
+- For Windows 11, see https://learn.microsoft.com/en-us/windows/wsl/connect-usb
+Start usbipd with PowerShell 7.0 or later, connect and bind the cp2112 device, and then start the container.
 - Before building the image, copy the contents of amd64_bin/* or i386_bin/* to the app-src/bin/ directory according to your environment.
 - https://hub.docker.com/r/kujiranodanna/iot-house_docker<img width="986" alt="sshot_iot-house_docker" src="https://user-images.githubusercontent.com/70492305/143548255-1ff3dd03-4130-466d-8f81-b4f95b112208.png">
