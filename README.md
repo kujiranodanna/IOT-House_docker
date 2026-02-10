@@ -1,6 +1,12 @@
 # IOT-House_docker
-- [IOT-House_docker](https://github.com/kujiranodanna/IOT-House_docker) is a reconstruction of [IOT-House_old_pc](https://github.com/kujiranodanna/IOT-House_old_pc) based on amd64/ubuntu:24.04 amd64/ubuntu:22.04 or i386/ubuntu18.04. Ver:0.15 2025.8.9
+- [IOT-House_docker](https://github.com/kujiranodanna/IOT-House_docker) is a reconstruction of [IOT-House_old_pc](https://github.com/kujiranodanna/IOT-House_old_pc) based on amd64/ubuntu:24.04 amd64/ubuntu:22.04 or i386/ubuntu18.04. Ver:0.16 2026.2.10
 
+- From Ver:0.16, you can now switch between CP2112 and RP2040-Zero.
+  - Please refer to the URL below for the Python program code of [RP2040-Zero](https://amzn.to/3Ox7vjL).
+  - [note kujiranodanna](https://note.com/kujiranodanna/n/nf63a393560dd)
+  - After installing it on the USB, run the following command.
+  - Execute as follows.<br>
+  docker run -itd --privileged --name iot-house_docker --device=/dev/ttyACM0:/dev/ttyACM0 -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
 - Requires docker privilege mode to use gpio's CP2112(Silicon Laboratories Single-Chip HID USB to SMBus Master Bridg)[Sunhayato MM-CP2112](https://amzn.to/3MhbeOd).
 - Wireless GPIO[mono wireless TWELITE and MONOSTICK](https://amzn.to/3YYzDj4)
 - Execute as follows.<br>
