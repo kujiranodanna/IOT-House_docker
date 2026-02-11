@@ -3,7 +3,7 @@
 
 - From Ver:0.16, you can now switch between CP2112 and RP2040-Zero.
   - Please refer to the URL below for the Python program code of [RP2040-Zero](https://amzn.to/3Ox7vjL).
-  - [note kujiranodanna](https://note.com/kujiranodanna/n/nf63a393560dd)
+  - [note kujiranodanna](https://note.com/kujiranodanna/n/n02874aeaa68d)
   - After installing it on the USB, run the following command.
   - Execute as follows.<br>
   docker run -itd --privileged --name iot-house_docker --device=/dev/ttyACM0:/dev/ttyACM0 -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house_docker:latest
