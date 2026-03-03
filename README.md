@@ -62,7 +62,7 @@ How about using Docker Desktop for Windows for your summer vacation research pro
 PS C:\Users\user1> usbipd list
 Connected:
 BUSID  VID:PID    DEVICE                                                        STATE
-1-1    2e8a:0005  USB シリアル デバイス (COM12) <-- RP2040-Zero                 Not shared
+1-1    2e8a:0005  USB Serial Device (COM12) <-- RP2040-Zero                 Not shared
 .
 Persisted:
 GUID                                  DEVICE
@@ -73,7 +73,7 @@ PS C:\Users\user1> usbipd bind --force --busid 1-1
 PS C:\Users\user1> usbipd list
 Connected:
 BUSID  VID:PID    DEVICE                                                        STATE
-1-1    2e8a:0005  USB シリアル デバイス (COM12)                                 Shared (forced)
+1-1    2e8a:0005  USB Serial Device  (COM12)                                 Shared (forced)
 .
 PS C:\Users\user1> usbipd attach --wsl  --busid 1-1
 usbipd: info: Using WSL distribution 'Ubuntu' to attach; the device will be available in all WSL 2 distributions.
@@ -97,7 +97,7 @@ PS C:\Users\user1>
 PS C:\Users\user1> usbipd list
 Connected:
 BUSID  VID:PID    DEVICE                                                        STATE
-1-1    2e8a:0005  USB シリアル デバイス (COM12)                                 Attached
+1-1    2e8a:0005  USB Serial Device  (COM12)                                 Attached
 .
 # into wls2
 $ docker run -itd --privileged --name iot-house_docker -p 8022:22 -p 80:80 -p 443:443 kujiranodanna/iot-house
