@@ -1,4 +1,4 @@
-## Dockerfile of iot-house_docker ; Ver:0.16 2026.3.10
+## Dockerfile of iot-house_docker ; Ver:0.16 2026.4.10
 ## docker system df  <-- Cache confirmation
 ## docker builder prune  <-- Build Cache clean
 ## docker build ./ -t iot-house_docker:v0.01  <-- Build
@@ -26,8 +26,8 @@
 ## Please refer to the following URL
 ## https://github.com/kujiranodanna/IOT-House_docker
 
-FROM amd64/ubuntu:24.04
-#FROM i386/ubuntu:18.04
+#FROM amd64/ubuntu:24.04
+FROM i386/ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Tokyo
 #ARG APP_UID=1000
