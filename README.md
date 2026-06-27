@@ -3,7 +3,7 @@
 
 - From Ver:0.16, you can now switch between CP2112 and RP2040-Zero.
   - Please refer to the URL below for the Python program code of [RP2040-Zero](https://amzn.to/3Ox7vjL).
-  - [note kujiranodanna](https://note.com/kujiranodanna/n/n02874aeaa68d)
+  - [note kujiranodanna](https://note.com/kujiranodanna/n/n02874aeaa68d) New! Ver:2026/06/27 
   - After installing it on the USB, run the following command.
   - If you want to use the RP2040-Zero from a Windows Docker container, you will need to bind and attach to the RP2040-Zero using powershell and wsl2, as described below.
   - Execute as follows.<br>
